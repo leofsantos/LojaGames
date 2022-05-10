@@ -1,4 +1,4 @@
-package org.generation.LojaGames.model.controller;
+package org.generation.LojaGames.controller;
 
 import java.util.List;
 
