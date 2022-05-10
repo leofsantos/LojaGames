@@ -24,12 +24,10 @@ public class ProdutoModel {
 	private long id;
 	
 	@NotBlank(message = "Insira o nome do jogo")
-	@Size(max=255)
 	private String nomeProduto;
 	
 	@NotNull(message = "Insira o ano de Lançamento do jogo")
-	@Size(min=4)
-	private int anoLancamento;
+	private long anoLancamento;
 	
 	@NotBlank(message = "Insira o nome da Desenvolvedora do jogo")
 	@Size(min=3,max=255)
@@ -67,11 +65,11 @@ public class ProdutoModel {
 		this.nomeProduto = nomeProduto;
 	}
 
-	public int getAnoLancamento() {
+	public long getAnoLancamento() {
 		return anoLancamento;
 	}
 
-	public void setAnoLancamento(int anoLancamento) {
+	public void setAnoLancamento(long anoLancamento) {
 		this.anoLancamento = anoLancamento;
 	}
 
