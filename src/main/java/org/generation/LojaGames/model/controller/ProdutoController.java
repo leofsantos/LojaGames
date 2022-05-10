@@ -11,13 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/jogos")
@@ -30,7 +33,7 @@ public class ProdutoController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<ProdutoModel>> getAll(){
 		return ResponseEntity.ok(produtoRepository.findAll());
 	}
@@ -47,14 +50,14 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoRepository.findAllByNomeProdutoContainingIgnoreCase(nomeProduto));
 	}
 	
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<ProdutoModel> postProduto(@Valid @RequestBody ProdutoModel produto){
 		if(categoriaRepository.existsById(produto.getCategoria().getId()))
 				return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity<ProdutoModel> putProduto(@Valid @RequestBody ProdutoModel produto){
 		if(produtoRepository.existsById(produto.getId())) {
 			if(categoriaRepository.existsById(produto.getCategoria().getId()))
@@ -63,6 +66,18 @@ public class ProdutoController {
 		}
 			else
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("/{id}")
+	   public void delete(@PathVariable long id) {
+		   java.util.Optional<ProdutoModel> Produto =produtoRepository.findById(id);
+			
+			if(Produto.isEmpty())
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			
+			produtoRepository.deleteById(id);
+		   
 	}
 
 }
