@@ -3,7 +3,7 @@ package org.generation.LojaGames.service;
 import java.nio.charset.Charset;
 import java.util.Optional;
 
-import org.apache.commons.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.generation.LojaGames.model.Usuario;
 import org.generation.LojaGames.model.UsuarioLogin;
 import org.generation.LojaGames.repository.UsuarioRepository;
