@@ -39,8 +39,20 @@ public class ProdutoModel {
 	
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
-	private CategoriaModel categoria;	
+	private CategoriaModel categoria;
 	
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Usuario usuario;
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	public CategoriaModel getCategoria() {
 		return categoria;
 	}
